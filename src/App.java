@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class App {
     
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws Exception {
         // TODO: Implementar menu interativo com as seguintes opcoes:
         // 1. Exercicio 01: Progressao Geometrica
@@ -18,7 +20,63 @@ public class App {
         // Utilize o método lerValor para validação de entrada
         // Exiba os resultados utilizando Arrays.toString() para vetores
         // Para matrizes, utilize o método exibirMatriz()
+        int opcao;
+        
+        do {
+            System.out.println("\n===== MENU INTERATIVO =====");
+            System.out.println("1. Exercicio 01: Progressao Geometrica");
+            System.out.println("2. Exercicio 02: Sequencia Decrescente");
+            System.out.println("3. Exercicio 03: Vetor Dinamico");
+            System.out.println("4. Exercicio 04: Sequencia Crescente com Soma");
+            System.out.println("5. Exercicio 05: Matriz com Valores Incrementais");
+            System.out.println("6. Exercicio 06: Operacao entre Matrizes");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opcao: ");
+            
+            opcao = scanner.nextInt();
+            System.out.println();
+            
+            switch (opcao) {
+                case 1:
+                    System.out.println("Resultado: " + Arrays.toString(ex01()));
+                    break;
+                case 2:
+                    System.out.println("Resultado: " + Arrays.toString(ex02()));
+                    break;
+                case 3:
+                    System.out.println("Resultado: " + Arrays.toString(ex03()));
+                    break;
+                case 4:
+                    int[] vetorEx4 = ex04();
+                    System.out.println("Resultado: " + Arrays.toString(vetorEx4));
+                    if (vetorEx4 != null) {
+                        System.out.println("Soma total: " + calcularSoma(vetorEx4));
+                    }
+                    break;
+                case 5:
+                    System.out.println("Matriz Resultante:");
+                    exibirMatriz(ex05());
+                    break;
+                case 6:
+                    int[][][] matrizesEx6 = ex06();
+                    if (matrizesEx6 != null) {
+                        System.out.println("Matriz N:");
+                        exibirMatriz(matrizesEx6[0]);
+                        System.out.println("Matriz Z:");
+                        exibirMatriz(matrizesEx6[1]);
+                        System.out.println("Matriz Soma (N + Z):");
+                        exibirMatriz(matrizesEx6[2]);
+                    }
+                    break;
+                case 0:
+                    System.out.println("Encerrando o sistema...");
+                    break;
+                default:
+                    System.out.println("Opcao invalida. Tente novamente.");
+            }
+        } while (opcao != 0);
     }
+
     
     /**
      * Metodo auxiliar para ler e validar entrada do usuario
@@ -29,9 +87,15 @@ public class App {
      * @return Valor valido lido
      */
     private static int lerValor(Scanner scanner, String mensagem, int min, int max) {
-        // TODO: Implementar validacao de entrada
-        // Deve repetir a leitura ate que o valor seja valido (min < valor <= max)
-        return 0; // Remover esta linha apos implementacao
+        int valor;
+        do {
+            System.out.print(mensagem);
+            valor = scanner.nextInt();
+            if (valor <= min || valor > max) {
+                System.out.println("Entrada invalida! O valor deve ser maior que " + min + " e menor ou igual a " + max + ".");
+            }
+        } while (valor <= min || valor > max);
+        return valor;
     }
     
     /**
@@ -39,8 +103,14 @@ public class App {
      * @param matriz Matriz a ser exibida
      */
     private static void exibirMatriz(int[][] matriz) {
-        // TODO: Implementar exibicao da matriz
-        // Use System.out.printf("%4d ", matriz[i][j]) para formatacao
+        if (matriz == null) return;
+        
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.printf("%4d ", matriz[i][j]);
+            }
+            System.out.println();
+        }
     }
     
     /**
@@ -54,7 +124,18 @@ public class App {
         // Criar vetor de 10 elementos
         // vetor[0] = valorInicial
         // Para i=1 ate 9: vetor[i] = vetor[i-1] * 2
-        return null; // Remover esta linha apos implementacao
+
+        if (valorInicial > 20) {
+            return null;
+        }
+
+        int[] vetor = new int[10];
+        vetor[0] = valorInicial;
+        for (int i=1;i<10;i++) {
+            vetor[i] = vetor[i-1]*2;
+        }
+
+        return vetor;
     }
     
     /**
@@ -68,7 +149,16 @@ public class App {
         // Criar vetor de 10 elementos
         // vetor[0] = valorInicial
         // Para i=1 ate 9: vetor[i] = vetor[i-1] - 1
-        return null; // Remover esta linha apos implementacao
+
+        if (valorInicial <= 1) {
+            return null;
+        }
+        int[] vetor = new int[10];
+        vetor[0] = valorInicial;
+        for (int i=1;i<10;i++) {
+            vetor[i] = vetor[i-1]-1;
+        }
+        return vetor;
     }
     
     /**
@@ -81,7 +171,16 @@ public class App {
         // Validar se tamanho <= 1000 (retornar null se invalido)
         // Criar vetor com tamanho especifico
         // Para i=0 ate tamanho-1: vetor[i] = i + 1
-        return null; // Remover esta linha apos implementacao
+
+        if (tamanho >= 1000) {
+            return null;
+        }
+        int[] vetor = new int[tamanho];
+        for (int i=0;i<tamanho;i++) {
+            vetor[i] = i+1;
+        }
+
+        return vetor;
     }
     
     /**
@@ -94,7 +193,14 @@ public class App {
         // Criar vetor de 10 elementos
         // vetor[0] = valorInicial
         // Para i=1 ate 9: vetor[i] = vetor[i-1] + 1
-        return null; // Remover esta linha apos implementacao
+
+        int[] vetor = new int[10];
+        vetor[0] = valorInicial;
+        for(int i=1;i<10;i++) {
+            vetor[i] = vetor[i-1]+1;
+        }
+
+        return vetor;
     }
     
     /**
@@ -105,7 +211,15 @@ public class App {
     public static int calcularSoma(int[] vetor) {
         // TODO: Implementar calculo da soma
         // Percorrer o vetor e somar todos os elementos
-        return 0; // Remover esta linha apos implementacao
+        if (vetor == null) {
+            return 0;
+        }
+        int soma = 0;
+        for (int valor : vetor) {
+            soma += valor;
+        }
+
+        return soma;
     }
     
     /**
@@ -118,7 +232,16 @@ public class App {
         // Criar matriz quadrada NxN
         // Contador inicial = tamanho + 1
         // Para cada posicao [i][j]: matriz[i][j] = contador++
-        return null; // Remover esta linha apos implementacao
+
+        int[][] matriz = new int[4][4];
+        int contador = tamanho + 1;
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                matriz[i][j] = contador++;
+            }
+        }
+
+        return matriz;
     }
     
     /**
@@ -136,7 +259,23 @@ public class App {
         //   matrizSoma[i][j] = matrizN[i][j] + matrizZ[i][j]
         //   contador++
         // Retornar array com as 3 matrizes
-        return null; // Remover esta linha apos implementacao
+        if (tamanho <= 0) {
+            return null;
+        }
+
+        int[][][] resultado = new int[3][tamanho][tamanho];
+        int contador = tamanho + 1;
+        
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                resultado[0][i][j] = contador;
+                resultado[1][i][j] = contador;
+                resultado[2][i][j] = resultado[0][i][j] + resultado[1][i][j];
+                contador++;
+            }
+        }
+
+        return resultado;
     }
     
     // ========================================
@@ -150,7 +289,9 @@ public class App {
      */
     public static int[] ex01() {
         // TODO: Implementar leitura de entrada e chamar progressaoGeometrica()
-        return null; // Remover esta linha apos implementacao
+
+        int valorInicial = lerValor(scanner, "Digite o valor inicial (<= 20): ", -999999, 20);
+        return progressaoGeometrica(valorInicial);
     }
     
     /**
@@ -159,7 +300,8 @@ public class App {
      */
     public static int[] ex02() {
         // TODO: Implementar leitura de entrada e chamar sequenciaDecrescente()
-        return null; // Remover esta linha apos implementacao
+        int valorInicial = lerValor(scanner, "Digite o valor inicial (> 1): ", 1, 999999);
+        return sequenciaDecrescente(valorInicial);
     }
     
     /**
@@ -168,7 +310,8 @@ public class App {
      */
     public static int[] ex03() {
         // TODO: Implementar leitura de entrada e chamar vetorDinamico()
-        return null; // Remover esta linha apos implementacao
+        int tamanho = lerValor(scanner, "Digite o tamanho do vetor (1 a 1000): ", 0, 1000);
+        return vetorDinamico(tamanho);
     }
     
     /**
@@ -177,7 +320,9 @@ public class App {
      */
     public static int[] ex04() {
         // TODO: Implementar leitura de entrada e chamar sequenciaCresenteComSoma()
-        return null; // Remover esta linha apos implementacao
+        System.out.print("Digite o valor inicial para a sequencia: ");
+        int valorInicial = scanner.nextInt();
+        return sequenciaCresenteComSoma(valorInicial);
     }
     
     /**
@@ -186,7 +331,8 @@ public class App {
      */
     public static int[][] ex05() {
         // TODO: Implementar leitura de entrada e chamar matrizIncrementais()
-        return null; // Remover esta linha apos implementacao
+        int tamanho = lerValor(scanner, "Digite o tamanho da matriz quadrada: ", 0, 1000);
+        return matrizIncrementais(tamanho);
     }
     
     /**
@@ -195,6 +341,7 @@ public class App {
      */
     public static int[][][] ex06() {
         // TODO: Implementar leitura de entrada e chamar operacaoEntreMatrizes()
-        return null; // Remover esta linha apos implementacao
+        int tamanho = lerValor(scanner, "Digite o tamanho das matrizes quadradas: ", 0, 1000);
+        return operacaoEntreMatrizes(tamanho);
     }
 }
